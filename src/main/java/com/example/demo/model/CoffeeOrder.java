@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
@@ -14,16 +11,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="T_ORDER")
+@Table(name = "T_ORDER")
 @Builder
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CoffeeOrder implements Serializable {
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class CoffeeOrder extends BaseEntity implements Serializable {
     private String customer;
 
     @ManyToMany
@@ -31,12 +25,6 @@ public class CoffeeOrder implements Serializable {
     private List<Coffee> items;
 
     @Column(nullable = false)
-    private Integer state;
-
-    @Column(updatable=false)
-    @CreationTimestamp
-    private Date createTime;
-
-    @UpdateTimestamp
-    private Date updateTime;
+    private OrderState state;
 }
+
